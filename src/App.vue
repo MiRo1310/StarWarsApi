@@ -3,43 +3,40 @@
     <h1 class="  text-7xl p-7 cursor-pointer " v-on:click="this.getData(this.apiURL)">{{ title.toLocaleUpperCase() }}
     </h1>
     <nav class="text-4xl flex justify-center">
-      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/planets/')">Planets</p>
-      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/people/')">People</p>
-      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/films/')">Films</p>
-      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/vehicles/')">Vehicles</p>
-      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/starships/')">Starships</p>
-      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/species/')">Species</p>
-
+      <p class="px-10 cursor-pointer underline" v-on:click="this.getData('https://swapi.dev/api/planets/')">Planets</p>
+      <p class="px-10 cursor-pointer underline" v-on:click="this.getData('https://swapi.dev/api/people/')">People</p>
+      <p class="px-10 cursor-pointer underline" v-on:click="this.getData('https://swapi.dev/api/films/')">Films</p>
+      <p class="px-10 cursor-pointer underline" v-on:click="this.getData('https://swapi.dev/api/vehicles/')">Vehicles</p>
+      <p class="px-10 cursor-pointer underline" v-on:click="this.getData('https://swapi.dev/api/starships/')">Starships</p>
+      <p class="px-10 cursor-pointer underline" v-on:click="this.getData('https://swapi.dev/api/species/')">Species</p>
     </nav>
 
-    <p class="text-xl p-2">{{ response.length }} {{ page }} of the Star Wars Universe</p>
+    <p class="text-xl p-2 my-6">{{ response.length }} {{ page }} of the Star Wars Universe</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div v-if="!this.oneInfo" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div v-for="(value, index) in response" :key="`${value}${response[1]}`">
-      <StarWarsList v-if="!this.singleInfo" :valueAPIprob="value" :indexprob="index" @loadSide-url="loadSide" />
+      <StarWarsList v-if="!this.oneInfo" :valueAPIprob="value" :indexprob="index" :oneInfoProb="this.oneInfo"  @loadSide-url="loadSide" />
     </div>
   </div>
-  <StarWarsOneItem class="mx-96" v-if="this.singleInfo" :valueAPIprob="response" @loadSide-url="loadSide" />
+  <StarWarsList class="mx-96 p-8" v-if="this.oneInfo" :valueAPIprob="response" :oneInfoProb="this.oneInfo" @loadSide-url="loadSide" /> 
 </template>
 
 <script>
-// import { appendFile } from 'fs';
 import StarWarsList from './components/StarWarsList.vue'
-import StarWarsOneItem from './components/StarWarsOneItem.vue'
+
 
 export default {
   name: 'App',
   components: {
-    StarWarsList,
-    StarWarsOneItem,
+    StarWarsList,  
   },
   data() {
     return {
       title: "Star Wars",
       response: [],
       apiURL: "https://swapi.dev/api/planets/",      
-      singleInfo: false,
+      oneInfo: false,
       actualUrl: "",
       page: "",
     }
@@ -48,14 +45,12 @@ export default {
     this.getData(this.apiURL)
   },
   computed: {
-
-
   },
   methods: {
     async getData(url) {
       console.log(url)
       this.actualUrl = url;
-      this.singleInfo = false;
+      this.oneInfo = false;
       this.response = []
       this.getPage();
       try {
@@ -68,9 +63,9 @@ export default {
           console.log(response.data)
         }
         if (url.match(/[0-9]/)) {
-          this.singleInfo = true
+          this.oneInfo = true
         } else {
-          this.singleInfo = false
+          this.oneInfo = false
         }
 
 
