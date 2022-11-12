@@ -16,7 +16,7 @@
             </div>
           </template>         
 
-          <p v-else class="px-6">{{ firstLetterToUpperCase(key) }}: {{value}}</p>
+          <p v-else class="px-6">{{ firstLetterToUpperCase(key) }}: {{firstLetterToUpperCase(value)}}</p>
 
         </li>
 
