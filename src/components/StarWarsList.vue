@@ -14,8 +14,7 @@
             <div v-for="val in value" v-bind:key="val[1]">              
               <a v-on:click="loadSide(val)" class="underline text-yellow-400 my-6" href="#">{{ val}}</a>
             </div>
-          </template>
-         
+          </template>         
 
           <p v-else class="px-6">{{ firstLetterToUpperCase(key) }}: {{value}}</p>
 
