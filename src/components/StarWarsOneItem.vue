@@ -1,11 +1,10 @@
 
 <template>
-  <div class="bg-black text-center py-12 border-2 border-yellow-200 m-5 ">
+  <div class="bg-black text-center py-8 border-2 border-yellow-200 m-5 ">
     <h2 class="text-yellow-400 text-2xl" v-if="valueAPI.name">{{ valueAPI.name }}</h2>
     <h2 class="text-yellow-400 text-2xl" v-if="valueAPI.title">{{ valueAPI.title }}</h2>
     <button class="bg-blue-200 rounded p-2 text-gray-700 mt-5" v-on:click="toggleShow">Show Info</button>
-    <div v-if="show">
-      <p class="text-yellow-400 my-6 ">Info des Planeten</p>
+    <div class="text-sm" v-if="show">      
       <ul class="text-white">
 
 

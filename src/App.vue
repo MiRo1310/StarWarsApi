@@ -2,8 +2,8 @@
   <div class="bg-black text-yellow-400 text-center">
     <h1 class="  text-7xl p-7 cursor-pointer " v-on:click="this.getData(this.apiURL)">{{ title.toLocaleUpperCase() }}
     </h1>
-    <nav class="text-4xl flex ">
-      <p v-on:click="this.getData('https://swapi.dev/api/planets/')">Planets</p>
+    <nav class="text-4xl flex justify-center">
+      <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/planets/')">Planets</p>
       <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/people/')">People</p>
       <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/films/')">Films</p>
       <p class="px-10 cursor-pointer " v-on:click="this.getData('https://swapi.dev/api/vehicles/')">Vehicles</p>
@@ -12,7 +12,7 @@
 
     </nav>
 
-    <p class="text-xl p-4">{{ response.length }} {{ page }} of the Star Wars Universe</p>
+    <p class="text-xl p-2">{{ response.length }} {{ page }} of the Star Wars Universe</p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
