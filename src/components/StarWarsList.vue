@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black text-center py-8 border-2 border-yellow-200 m-5 ">
+  <div class="bg-slate-700 text-center py-8 border-2 border-yellow-200 m-5 ">
     <h2 class="text-yellow-400 text-2xl underline cursor-pointer" v-on:click="loadSide(valueAPI.url)">{{ valueAPI.name
     }}{{ valueAPI.title }}</h2>
 
