@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-slate-700 text-center py-8 border-2 border-yellow-200 m-5 ">
+  <div class="bg-slate-700 text-center py-8 border-2 border-yellow-200 m-5">
     <h2 class="text-yellow-400 text-2xl underline cursor-pointer" v-on:click="loadSide(valueAPI.url)">{{ valueAPI.name
     }}{{ valueAPI.title }}</h2>
 
     <button class="bg-blue-200 rounded p-2 text-gray-700 my-5" v-on:click="toggleShow">Show / Hide Info</button>
     <div v-if="show">
-      <ul class="text-white">
+      <ul class="text-white text-sm">
 
         <li v-for="(value, key) in valueAPI" v-bind:key="value">
           <template v-if="Array.isArray(value)">
