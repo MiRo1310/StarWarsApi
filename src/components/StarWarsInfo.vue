@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "StarWarsList",
+  name: "StarWarsInfo",
   components: {
 
   },
