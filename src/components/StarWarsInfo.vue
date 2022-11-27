@@ -5,19 +5,22 @@
     <br>
     <ul class="text-white text-xl">
 
-      <li v-for="(value, key) in response[page][pageNumber]" v-bind:key="value">
+      <li v-for="(value, key, index) in response[page][pageNumber]" :key="index">
         <template v-if="Array.isArray(value)">
           <p class="lg:text-sm"> {{
               firstLetterToUpperCase(key)
           }} :</p>
-          <div v-for="val in value" v-bind:key="val">
+          <template v-if="value.length != 0">
+            <div v-for="val in value" v-bind:key="val">
+              <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)" href="#">{{
+                  loadNameOrTitle(val)
+              
+              }}
+              </a>
+            </div>
 
-            <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)" href="#">{{
-                loadNameOrTitle(val)
-            
-            }}
-            </a>
-          </div>
+          </template>
+          <template v-else><span class="lg:text-sm">Not defiend</span></template>
         </template>
 
 
@@ -69,6 +72,11 @@ export default {
   },
 
   methods: {
+    arrayLength(array) {
+      console.log(array)
+      if (array.length != 0) return true
+      else return false
+    },
     loadInfo(val) {
       this.$emit("loadInfo", val)
     },
