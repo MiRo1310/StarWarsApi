@@ -26,8 +26,9 @@
   <div class="grid grid-cols-4 text-white ">
     <nav v-if="start == false">
       <ul>
-        <StarWarsNav v-for="(element) in this.response[this.page]" :element="element" :key="element"
-          @loadInfo="loadInfo" />
+        <!-- Nav Links -->
+        <StarWarsNav v-for="(element) in this.response[this.page]" :element="element" :item="changeItem"
+          :pageNumber="this.pageNumber" :key="element" @loadInfo="loadInfo" />
 
       </ul>
     </nav>
@@ -44,6 +45,10 @@
   </div>
   <div v-if="start == true">
     <!-- <img class="mainPic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader"> -->
+    <p class="text-yellow-400 text-center mt-2">A project to get data with the star wars api, following tools are used,
+      AXIOS
+      Vue.js 3 ,
+      Tailwind, Webpack</p>
     <img class="mainPic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader">
   </div>
 </template>
@@ -79,6 +84,9 @@ export default {
     selectPic() {
       return require(`@/assets/img/${this.page}.jpg`)
     },
+    changeItem() {
+      return this.item
+    }
   },
   methods: {
     activeLink(key) {
@@ -87,6 +95,7 @@ export default {
 
     },
     loadPage(key) {
+      this.item = ""
       this.start = false
       this.page = key
       this.pageNumber = null
@@ -129,11 +138,14 @@ export default {
 
     loadInfo(val) {
       const category = this.getCategory(val)
-      console.log("Category " + category)
+      // console.log("Category " + category)
       this.page = category;
       let item = this.response[category].find(element => element.url == val)
       this.pageNumber = (this.response[category].indexOf(item))
-      console.log("Pagenumber " + this.pageNumber)
+      // console.log("Pagenumber " + this.pageNumber)
+      this.item = this.response[category][this.pageNumber].name || this.response[category][this.pageNumber].title
+
+
     },
   },
 }
