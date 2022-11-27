@@ -2,6 +2,7 @@
   <header class=" bg-gray-800 text-yellow-400 text-center border-b-4 border-yellow-400 border-double pb-4">
     <h1 class="  text-6xl p-5 cursor-pointer " v-on:click="this.start = true">{{ title.toLocaleUpperCase() }}
     </h1>
+    <p v-if="this.loading === true">Loading...</p>
     <!-- Navigation -->
     <!-- <nav :class="`lg:grid-cols-${Object.keys(this.response).length}`" -->
     <!--Mal funktionierte es mal wieder nicht-->
@@ -71,7 +72,8 @@ export default {
       page: "",
       pageNumber: null,
       item: "",
-      start: true
+      start: true,
+      loading: true,
     }
   },
   mounted() {
@@ -111,13 +113,18 @@ export default {
       }
     },
     async getData(url) {
+      let data = {};
       const result = await this.getApiData(url)
       for (let item in result) {
 
-        this.response[item] = await this.getApiData(result[item])
+        data[item] = await this.getApiData(result[item])
+
+
 
       }
-      console.log(this.response)
+      this.loading = false;
+      this.response = data;
+
     },
 
     firstLetterToUpperCase(name) {
