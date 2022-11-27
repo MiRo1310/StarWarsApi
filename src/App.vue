@@ -8,7 +8,10 @@
     <nav :class="`lg:grid-cols-6`"
       class="grid grid-cols-2 sm:grid-cols-4 underline-offset-4 lg:text-2xl text-3xl justify-center ">
       <template v-for="(item, key) in response" :key="key.item">
-        <p class="mr_hyperlink" v-on:click="loadPage(key)">{{ firstLetterToUpperCase(key) }}</p>
+        <p class="mr_hyperlink bg-gray-600 mx-4 pb-3 pt-1 rounded-lg" v-on:click="loadPage(key)">{{
+            firstLetterToUpperCase(key)
+        }}
+        </p>
       </template>
     </nav>
 
@@ -71,7 +74,6 @@ export default {
   },
   computed: {
     selectPic() {
-      console.log(this.page)
       return require(`@/assets/img/${this.page}.jpg`)
     },
   },
