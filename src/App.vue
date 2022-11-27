@@ -44,12 +44,12 @@
 
   </div>
   <div v-if="start == true">
-    <!-- <img class="mainPic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader"> -->
+    <!-- <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader"> -->
     <p class="text-yellow-400 text-center mt-2">A project to get data with the star wars api, following tools are used,
       AXIOS
       Vue.js 3 ,
       Tailwind, Webpack</p>
-    <img class="mainPic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader">
+    <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader">
   </div>
 </template>
 
@@ -68,11 +68,8 @@ export default {
       title: "Star Wars",
       response: {},
       apiURL: "https://swapi.dev/api/",
-      oneInfo: false,
-      actualUrl: "",
       page: "",
       pageNumber: null,
-      numberItem: null,
       item: "",
       start: true
     }
@@ -152,7 +149,7 @@ export default {
 </script>
 
 <style>
-.mainPic {
+.mr_pic {
   width: 60%;
 
 }

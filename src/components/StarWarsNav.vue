@@ -25,8 +25,8 @@ export default {
     },
     methods: {
         activeItem() {
-            console.log(this.item)
-            console.log(this.value.name)
+            // console.log(this.item)
+            // console.log(this.value.name)
             if (this.item === this.value.name || this.item === this.value.title) {
                 return "bg-blue-600 text-white border-yellow-400 border-2"
             }
