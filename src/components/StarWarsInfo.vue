@@ -1,32 +1,48 @@
 <template>
-  <div class="bg-slate-700 text-center py-8 border-2 border-yellow-200 m-5">
-    <h2 class="text-yellow-400 text-2xl underline cursor-pointer" v-on:click="loadSide(valueAPI.url)">{{ valueAPI.name
-    }}{{ valueAPI.title }}</h2>
+  <div class="bg-slate-700 text-center py-8 border-2 border-yellow-400 m-4 rounded-lg">
+    <h2 class="text-yellow-400 text-3xl underline underline-offset-4">{{ itemTitle
+    }}</h2>
+    <br>
+    <ul class="text-white text-xl">
 
-    <button class="bg-blue-200 rounded p-2 text-gray-700 my-5" v-on:click="toggleShow">Show / Hide Info</button>
-    <div v-if="show">
-      <ul class="text-white text-sm">
+      <li v-for="(value, key) in response[page][pageNumber]" v-bind:key="value">
+        <template v-if="Array.isArray(value)">
+          <p class="lg:text-sm"> {{
+              firstLetterToUpperCase(key)
+          }} :</p>
+          <div v-for="val in value" v-bind:key="val">
 
-        <li v-for="(value, key) in valueAPI" v-bind:key="value">
-          <template v-if="Array.isArray(value)">
-            <p>{{
-                firstLetterToUpperCase(key)
-            }}: </p>
-            <div v-for="val in value" v-bind:key="val[1]">
-              <a v-on:click="loadSide(val)" class="underline text-yellow-400 my-6" href="#">{{ val }}</a>
-            </div>
-          </template>
+            <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)" href="#">{{
+                loadNameOrTitle(val)
+            
+            }}
+            </a>
+          </div>
+        </template>
 
-          <p v-else class="px-6">{{ firstLetterToUpperCase(key) }}: {{ firstLetterToUpperCase(value) }}</p>
 
-        </li>
+        <template v-else-if="checkValue(value, key)">
+          <p class="lg:text-sm">{{
+              firstLetterToUpperCase(key)
+          }}: </p>
+          <a @click="loadInfo(value)" class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" href="#">
 
-      </ul>
-    </div>
+            {{ loadNameOrTitle(value) }}
+          </a>
+        </template>
+
+
+        <p v-else class="px-6 lg:text-sm">{{ firstLetterToUpperCase(key) }}: {{ firstLetterToUpperCase(value) }}</p>
+
+      </li>
+
+    </ul>
+
   </div>
 </template>
 
 <script>
+
 export default {
   name: "StarWarsInfo",
   components: {
@@ -34,19 +50,58 @@ export default {
   },
   data() {
     return {
-      valueAPI: this.valueAPIprob,
-      show: this.oneInfoProb,
+
     };
   },
   computed: {
+    itemTitle() {
+      let value = "";
+      let property = this.response[this.page][this.pageNumber]
+      if (property.name) {
+        value = property.name
+      } else if (property.title) {
+        value = property.title
+      }
+
+      return value;
+    },
 
   },
+
   methods: {
-    toggleShow() {
-      this.show = !this.show;
+    loadInfo(val) {
+      this.$emit("loadInfo", val)
     },
-    loadSide(url) {
-      this.$emit("loadSide-url", url)
+    checkValue(value, key) {
+      if (this.page != "films") {
+        if (value.indexOf('https') >= 0 && key != 'url') {
+          return true
+        }
+
+      }
+
+
+    },
+
+    loadNameOrTitle(url) {
+      let element = url.replace("https://swapi.dev/api/", "")
+      let page = element.slice(0, element.indexOf("/"))
+      this.pageToGo = page
+      try {
+        let item = this.response[page].find(element => element.url == url)
+        // console.log(item)
+        if (item != undefined) {
+          if (item.name) { return item.name }
+          else if (item.title) { return item.title }
+          else { return "" }
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+
+
+
     },
 
     firstLetterToUpperCase(name) {
@@ -62,7 +117,7 @@ export default {
     },
 
   },
-  props: ["valueAPIprob", "indexprob", "oneInfoProb"],
+  props: ["response", "page", "pageNumber"],
 
 }
 </script>
