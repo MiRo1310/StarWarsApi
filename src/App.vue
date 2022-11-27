@@ -7,10 +7,13 @@
     <!--Mal funktionierte es mal wieder nicht-->
     <nav :class="`lg:grid-cols-6`"
       class="grid grid-cols-2 sm:grid-cols-4 underline-offset-4 lg:text-2xl text-3xl justify-center ">
+
+      <!-- Nav Header -->
       <template v-for="(item, key) in response" :key="key.item">
-        <p class="mr_hyperlink bg-gray-600 mx-4 pb-3 pt-1 rounded-lg" v-on:click="loadPage(key)">{{
-            firstLetterToUpperCase(key)
-        }}
+        <p class="mr_hyperlink bg-gray-600 mx-4 pb-3 pt-1 rounded-lg" v-on:click="loadPage(key)"
+          :class="activeLink(key)">{{
+              firstLetterToUpperCase(key)
+          }}
         </p>
       </template>
     </nav>
@@ -80,7 +83,7 @@ export default {
   methods: {
     activeLink(key) {
       if (key === this.page)
-        return "bg-blue-600 text-white"
+        return "bg-blue-700 text-white"
 
     },
     loadPage(key) {
