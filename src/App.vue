@@ -20,7 +20,7 @@
   <div class="grid grid-cols-4 text-white ">
     <nav v-if="start == false" class="border-r-4 border-yellow-400 border-double">
       <ul>
-        <StarWarsNav v-for="(element, index) in this.response[this.page]" :element="element" :key="element[index]"
+        <StarWarsNav v-for="(element) in this.response[this.page]" :element="element" :key="element"
           @loadInfo="loadInfo" />
 
       </ul>
@@ -76,7 +76,11 @@ export default {
     },
   },
   methods: {
+    activeLink(key) {
+      if (key === this.page)
+        return "bg-blue-600 text-white"
 
+    },
     loadPage(key) {
       this.start = false
       this.page = key
