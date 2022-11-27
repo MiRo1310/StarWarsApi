@@ -20,7 +20,7 @@
             </div>
 
           </template>
-          <template v-else><span class="lg:text-sm">Not defiend</span></template>
+          <template v-else><span class="lg:text-sm">Not defined</span></template>
         </template>
 
 
@@ -85,10 +85,7 @@ export default {
         if (value.indexOf('https') >= 0 && key != 'url') {
           return true
         }
-
       }
-
-
     },
 
     loadNameOrTitle(url) {
