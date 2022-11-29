@@ -1,18 +1,19 @@
 <template>
   <div class="bg-slate-700 text-center py-8 border-2 ml-0 border-yellow-400 m-4 rounded-lg">
+    <!-- Überschrift -->
     <h2 class="text-yellow-400 text-3xl underline underline-offset-4">{{ itemTitle
     }}</h2>
     <br>
     <ul class="text-white text-xl ">
 
       <li v-for="(value, key, index) in response[page][pageNumber]" :key="index">
-        <template v-if="Array.isArray(value)">
+        <template v-if="generateList(value)">
           <p class="lg:text-sm"> {{
               firstLetterToUpperCase(key)
           }} :</p>
           <template v-if="value.length != 0">
             <ul class="mb-2">
-              <li v-for="val in value" v-bind:key="val">
+              <li v-for="val in value" v-bind:key="val" class="inline mx-4">
                 <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)"
                   href="#">{{
                       loadNameOrTitle(val)
@@ -25,12 +26,12 @@
 
           </template>
           <template v-else>
+            <!-- Text not defiend -->
             <p class="lg:text-sm underline-offset-4 text-yellow-400 my-2">Not
               defined</p>
           </template>
         </template>
-
-
+        <!-- Link ohne Array -->
         <template v-else-if="checkValue(value, key)">
           <p class="lg:text-sm">{{
               firstLetterToUpperCase(key)
@@ -77,9 +78,13 @@ export default {
       return value;
     },
 
+
   },
 
   methods: {
+    generateList(value) {
+      return Array.isArray(value)
+    },
     arrayLength(array) {
       console.log(array)
       if (array.length != 0) return true
@@ -98,11 +103,13 @@ export default {
 
     loadNameOrTitle(url) {
       let element = url.replace("https://swapi.dev/api/", "")
+      console.log(element)
       let page = element.slice(0, element.indexOf("/"))
       this.pageToGo = page
       try {
         let item = this.response[page].find(element => element.url == url)
-        // console.log(item)
+        console.log("Item" + item)
+
         if (item != undefined) {
           if (item.name) { return item.name }
           else if (item.title) { return item.title }
