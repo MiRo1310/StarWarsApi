@@ -1,6 +1,7 @@
 <template >
   <header class=" bg-gray-800 text-yellow-400 text-center border-b-4 border-yellow-400 border-double pb-4">
-    <h1 class="  text-6xl p-5 cursor-pointer " v-on:click="loadSide()">{{ title.toLocaleUpperCase() }}
+    <h1 class="  text-6xl p-5  "> <span class="cursor-pointer" v-on:click="loadSide()">{{ title.toLocaleUpperCase()
+    }}</span>
     </h1>
     <p v-if="this.loading === true">Loading...</p>
     <!-- Navigation -->
