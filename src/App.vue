@@ -24,34 +24,37 @@
     }} of the
       Star Wars Universe</p>
   </header>
-  <div class="grid grid-cols-4 text-white ">
-    <nav v-if="start == false">
-      <ul>
-        <!-- Nav Links -->
-        <StarWarsNav v-for="(element) in this.response[this.page]" :element="element" :item="changeItem"
-          :pageNumber="this.pageNumber" :key="element" @loadInfo="loadInfo" />
+  <main>
+    <div class="grid grid-cols-4 text-white ">
+      <nav v-if="start == false">
+        <ul>
+          <!-- Nav Links -->
+          <StarWarsNav v-for="(element) in this.response[this.page]" :element="element" :item="changeItem"
+            :pageNumber="this.pageNumber" :key="element" @loadInfo="loadInfo" />
 
-      </ul>
-    </nav>
-    <div class="col-span-3" v-if="start == false && pageNumber != null">
+        </ul>
+      </nav>
+      <div class="col-span-3" v-if="start == false && pageNumber != null">
 
-      <StarWarsInfo :response="this.response" :page="this.page" :pageNumber="this.pageNumber" @loadInfo="loadInfo" />
+        <StarWarsInfo :response="this.response" :page="this.page" :pageNumber="this.pageNumber" @loadInfo="loadInfo" />
+      </div>
+      <div class=" col-span-3 self-center">
+        <!-- Bild-Info-Feld -->
+        <img v-if="start == false && pageNumber == null" class="w-10/12 px-24 mx-auto my-10" :src="selectPic"
+          alt="Darth Vader">
+      </div>
+
     </div>
-    <div class=" col-span-3 self-center">
-      <!-- Bild-Info-Feld -->
-      <img v-if="start == false && pageNumber == null" class="w-10/12 px-24 mx-auto my-10" :src="selectPic"
-        alt="Darth Vader">
+    <div v-if="start == true">
+      <!-- <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader"> -->
+      <p class="text-yellow-400 text-center mt-2">A project to get data with the star wars api, following tools are
+        used,
+        AXIOS
+        Vue.js 3 ,
+        Tailwind, Webpack</p>
+      <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader">
     </div>
-
-  </div>
-  <div v-if="start == true">
-    <!-- <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader"> -->
-    <p class="text-yellow-400 text-center mt-2">A project to get data with the star wars api, following tools are used,
-      AXIOS
-      Vue.js 3 ,
-      Tailwind, Webpack</p>
-    <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader">
-  </div>
+  </main>
 </template>
 
 <script>
