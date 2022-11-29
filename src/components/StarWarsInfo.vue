@@ -11,13 +11,17 @@
               firstLetterToUpperCase(key)
           }} :</p>
           <template v-if="value.length != 0">
-            <div v-for="val in value" v-bind:key="val">
-              <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)" href="#">{{
-                  loadNameOrTitle(val)
-              
-              }}
-              </a>
-            </div>
+            <ul>
+              <li v-for="val in value" v-bind:key="val">
+                <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)"
+                  href="#">{{
+                      loadNameOrTitle(val)
+                  
+                  }}
+                </a>
+              </li>
+            </ul>
+
 
           </template>
           <template v-else><span class="lg:text-sm underline-offset-4 text-yellow-400 my-6">Not
