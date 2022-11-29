@@ -1,6 +1,6 @@
 <template >
   <header class=" bg-gray-800 text-yellow-400 text-center border-b-4 border-yellow-400 border-double pb-4">
-    <h1 class="  text-6xl p-5 cursor-pointer " v-on:click="this.start = true">{{ title.toLocaleUpperCase() }}
+    <h1 class="  text-6xl p-5 cursor-pointer " v-on:click="loadSide()">{{ title.toLocaleUpperCase() }}
     </h1>
     <p v-if="this.loading === true">Loading...</p>
     <!-- Navigation -->
@@ -88,6 +88,10 @@ export default {
     }
   },
   methods: {
+    loadSide() {
+      this.start = true
+      this.page = ""
+    },
     activeLink(key) {
       if (key === this.page)
         return "bg-blue-600 text-white border-yellow-400 border-2"
