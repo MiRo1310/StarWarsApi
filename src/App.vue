@@ -3,10 +3,9 @@
     <h1 class="  text-6xl p-5  "> <span class="cursor-pointer" v-on:click="loadSide()">{{ title.toLocaleUpperCase()
     }}</span>
     </h1>
-    <p v-if="this.loading === true">Loading...</p>
+    <!-- Loading -->
+    <p v-if="showLoading">Loading...</p>
     <!-- Navigation -->
-    <!-- <nav :class="`lg:grid-cols-${Object.keys(this.response).length}`" -->
-    <!--Mal funktionierte es mal wieder nicht-->
     <nav :class="`lg:grid-cols-6`"
       class="grid grid-cols-2 sm:grid-cols-4 underline-offset-4 lg:text-2xl text-3xl justify-center ">
 
@@ -19,7 +18,7 @@
         </p>
       </template>
     </nav>
-
+    <!-- Info Field -->
     <p v-if="start == false" class="text-xl p-2 my-2">{{ this.response[page].length }} {{
         firstLetterToUpperCase(this.page)
     }} of the
@@ -47,15 +46,15 @@
 
     </div>
     <div v-if="start == true">
-      <!-- <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader"> -->
-      <p class="text-yellow-400 text-center mt-2">A project to get data with the star wars api, following tools are
-        used,
-        AXIOS
-        Vue.js 3 ,
-        Tailwind, Webpack</p>
+      <h2 class="text-yellow-400 text-center mt-2 text-3xl">Welcome to my project!!!
+        <br>
+        <span class="text-xl">This is a project to visualizedata of the <span class="text-yellow-700 ">"SWAPI
+            The Star Wars API"</span>. I´m using: AXIOS, Vue.js 3, Tailwind and Webpack</span>
+      </h2>
       <img class="mr_pic m-auto mt-8" src="./assets/img/star-wars-main.jpg" alt="Darth Vader">
     </div>
   </main>
+
 </template>
 
 <script>
@@ -92,8 +91,12 @@ export default {
     },
     changeItem() {
       return this.item
+    },
+    showLoading() {
+      return this.loading === true
     }
   },
+
   methods: {
     loadSide() {
       this.start = true
@@ -101,7 +104,7 @@ export default {
     },
     activeLink(key) {
       if (key === this.page)
-        return "bg-blue-600 text-white border-yellow-400 border-2"
+        return "bg-blue-900 text-white border-yellow-400 border-2"
 
     },
     loadPage(key) {
@@ -168,7 +171,7 @@ export default {
 
 <style>
 .mr_pic {
-  width: 60%;
+  width: 50%;
 
 }
 </style>

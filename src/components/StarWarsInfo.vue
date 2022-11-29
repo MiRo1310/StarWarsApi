@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-700 text-center py-8 border-2 border-yellow-400 m-4 rounded-lg">
+  <div class="bg-slate-700 text-center py-8 border-2 ml-0 border-yellow-400 m-4 rounded-lg">
     <h2 class="text-yellow-400 text-3xl underline underline-offset-4">{{ itemTitle
     }}</h2>
     <br>
@@ -37,18 +37,13 @@
           }}: </p>
           <ul class="mb-2">
             <li>
-
               <a @click="loadInfo(value)" class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6 mb-2"
                 href="#">
-
                 {{ loadNameOrTitle(value) }}
               </a>
             </li>
           </ul>
-
         </template>
-
-
         <p v-else class="px-6 lg:text-sm">{{ firstLetterToUpperCase(key) }}: {{ firstLetterToUpperCase(value) }}</p>
 
       </li>
@@ -79,7 +74,6 @@ export default {
       } else if (property.title) {
         value = property.title
       }
-
       return value;
     },
 

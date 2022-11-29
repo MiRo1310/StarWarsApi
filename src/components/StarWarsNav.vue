@@ -28,7 +28,7 @@ export default {
             // console.log(this.item)
             // console.log(this.value.name)
             if (this.item === this.value.name || this.item === this.value.title) {
-                return "bg-blue-600 text-white border-yellow-400 border-2"
+                return "bg-blue-900 text-white border-yellow-400 border-2"
             }
             else { return "bg-slate-700" }
         },
