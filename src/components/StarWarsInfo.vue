@@ -20,7 +20,8 @@
             </div>
 
           </template>
-          <template v-else><span class="lg:text-sm">Not defined</span></template>
+          <template v-else><span class="lg:text-sm underline-offset-4 text-yellow-400 my-6">Not
+              defined</span></template>
         </template>
 
 

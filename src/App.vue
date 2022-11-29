@@ -41,7 +41,7 @@
       <div class=" col-span-3 self-center">
         <!-- Bild-Info-Feld -->
         <img v-if="start == false && pageNumber == null" class="w-10/12 px-24 mx-auto my-10" :src="selectPic"
-          alt="Darth Vader">
+          :alt="selectAlt">
       </div>
 
     </div>
@@ -85,6 +85,9 @@ export default {
   computed: {
     selectPic() {
       return require(`@/assets/img/${this.page}.jpg`)
+    },
+    selectAlt() {
+      return this.page
     },
     changeItem() {
       return this.item
