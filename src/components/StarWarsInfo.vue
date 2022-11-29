@@ -3,7 +3,7 @@
     <h2 class="text-yellow-400 text-3xl underline underline-offset-4">{{ itemTitle
     }}</h2>
     <br>
-    <ul class="text-white text-xl">
+    <ul class="text-white text-xl ">
 
       <li v-for="(value, key, index) in response[page][pageNumber]" :key="index">
         <template v-if="Array.isArray(value)">
@@ -11,7 +11,7 @@
               firstLetterToUpperCase(key)
           }} :</p>
           <template v-if="value.length != 0">
-            <ul>
+            <ul class="mb-2">
               <li v-for="val in value" v-bind:key="val">
                 <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)"
                   href="#">{{
@@ -24,8 +24,10 @@
 
 
           </template>
-          <template v-else><span class="lg:text-sm underline-offset-4 text-yellow-400 my-6">Not
-              defined</span></template>
+          <template v-else>
+            <p class="lg:text-sm underline-offset-4 text-yellow-400 my-2">Not
+              defined</p>
+          </template>
         </template>
 
 
@@ -33,10 +35,17 @@
           <p class="lg:text-sm">{{
               firstLetterToUpperCase(key)
           }}: </p>
-          <a @click="loadInfo(value)" class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" href="#">
+          <ul class="mb-2">
+            <li>
 
-            {{ loadNameOrTitle(value) }}
-          </a>
+              <a @click="loadInfo(value)" class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6 mb-2"
+                href="#">
+
+                {{ loadNameOrTitle(value) }}
+              </a>
+            </li>
+          </ul>
+
         </template>
 
 
