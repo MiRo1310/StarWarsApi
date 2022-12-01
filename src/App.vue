@@ -1,5 +1,6 @@
 <template >
-  <header class=" bg-gray-800 text-yellow-400 text-center border-b-4 border-yellow-400 border-double pb-4">
+  <header
+    class=" bg-gray-800 text-yellow-400 text-center border-b-4 border-yellow-400 border-double pb-4 fixed w-full pt-0 top-0 p-10">
     <h1 class="  text-6xl p-5  "> <span class="cursor-pointer" v-on:click="loadSide()">{{ title.toLocaleUpperCase()
     }}</span>
     </h1>
@@ -11,7 +12,7 @@
 
       <!-- Nav Header -->
       <template v-for="(item, key) in response" :key="key.item">
-        <p class="mr_hyperlink bg-gray-600 mx-4 pb-3 pt-1 rounded-lg" v-on:click="loadPage(key)"
+        <p class="mr_hyperlink bg-gray-600 mx-4 pb-3 pt-1 sm:text-xl sm:px-2 rounded-lg " v-on:click="loadPage(key)"
           :class="activeLink(key)">{{
               firstLetterToUpperCase(key)
           }}
@@ -24,8 +25,8 @@
     }} of the
       Star Wars Universe</p>
   </header>
-  <main>
-    <div class="grid grid-cols-4 text-white ">
+  <main class="pt-[232px] ">
+    <div class="grid grid-cols-4">
       <nav v-if="start == false">
         <ul>
           <!-- Nav Links -->
@@ -34,15 +35,24 @@
 
         </ul>
       </nav>
-      <div class="col-span-3" v-if="start == false && pageNumber != null">
+      <div class="col-span-3 " v-if="start == false && pageNumber != null">
+        <div class="fixed  w-3/4 top-[232px] ">
+          <div class="">
+            <StarWarsInfo :response="this.response" :page="this.page" :pageNumber="this.pageNumber"
+              @loadInfo="loadInfo" />
+          </div>
 
-        <StarWarsInfo :response="this.response" :page="this.page" :pageNumber="this.pageNumber" @loadInfo="loadInfo" />
+        </div>
+
       </div>
-      <div class=" col-span-3 self-center">
-        <!-- Bild-Info-Feld -->
-        <img v-if="start == false && pageNumber == null" class="w-10/12 px-24 mx-auto my-10" :src="selectPic"
-          :alt="selectAlt">
+      <div>
+        <div class=" col-span-3 text-center mt-5 fixed w-3/4">
+          <!-- Bild-Info-Feld -->
+          <img v-if="start == false && pageNumber == null" class="w-10/12 px-24 mx-auto my-10" :src="selectPic"
+            :alt="selectAlt">
+        </div>
       </div>
+
 
     </div>
     <div v-if="start == true">
@@ -129,23 +139,64 @@ export default {
     async getData(url) {
       let data = {};
       const result = await this.getApiData(url)
-      for (let item in result) {
 
-        data[item] = await this.getApiData(result[item])
+      if (result) {
+        for (let item in result) {
 
+          data[item] = await this.getApiData(result[item])
 
-
+        }
       }
+
+
       this.loading = false;
       this.response = data;
+      console.log(data)
+      let arrayLinks = [];
+      for (const group in data) {
+        for (const item in data[group]) {
+          // console.log(data[group])
+          // console.log(data[group][element])
+          for (const entry in data[group][item]) {
+            const el = data[group][item][entry]
+            // console.log(el)
+            if (Array.isArray(el)) {
+              el.forEach((url) => {
+                // Wenn dieser Eintag in dem Object gefunden wird soll nichts gemacht werden
+
+                if (!(data[this.getCategory(url)].find(entry => entry.url === url))) {
+                  if (arrayLinks.indexOf(url) == -1) {
+                    arrayLinks.push(url)
+                    this.getApiData(url).then((newData) => {
+                      if (newData) {
+                        // TODO diesen Eintrag dem Object hinzufügen
+                        if (!(data[this.getCategory(url)].find(entry => entry === newData))) {
+                          data[this.getCategory(url)].push(newData);
+                        }
+
+
+                      }
+                    })
+                  }
+
+
+
+                }
+
+
+              })
+              // TODO wenn es sich nur um einen EIntrag handelt
+            }
+          }
+
+        }
+      }
+
+      console.log(data)
 
     },
-
     firstLetterToUpperCase(name) {
-      const firstLetter = name.slice(0, 1); // Ersten Buchstaben selektieren
-      const leftoverLetters = name.slice(1); // Restliche Buchstaben selektieren
-      name = firstLetter.toUpperCase() + leftoverLetters; // Erster Buchstabe in Groß + Rest
-      return name;
+      return name.slice(0, 1).toLocaleUpperCase() + name.slice(1)
     },
 
     getCategory(url) {
@@ -172,7 +223,6 @@ export default {
 <style>
 .mr_pic {
   width: 50%;
-
 }
 </style>
 

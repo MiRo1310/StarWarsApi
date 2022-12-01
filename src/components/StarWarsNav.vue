@@ -2,7 +2,7 @@
     <li @click="setInfoNumber(value.url)"
         class="py-3 my-4 text-yellow-400 text-2xl lg:text-sm underline underline-offset-4 cursor-pointer  p-4 border-yellow-400 border-2 mx-4 rounded-lg"
         :class="activeItem()">
-        <a href="#">{{
+        <a href="javascript:void(0)">{{
                 value.name
         }} {{ value.title }}
 
