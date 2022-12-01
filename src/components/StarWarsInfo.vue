@@ -7,23 +7,21 @@
     <ul class="text-white text-xl ">
 
       <li v-for="(value, key, index) in response[page][pageNumber]" :key="index">
+        <p class="lg:text-sm inline-block  w-20" :class="textKeyPosition(value)"> {{
+            firstLetterToUpperCase(key)
+        }} :</p>
+        <!-- Eine Liste aus einem Array -->
         <template v-if="generateList(value)">
-          <p class="lg:text-sm"> {{
-              firstLetterToUpperCase(key)
-          }} :</p>
           <template v-if="value.length != 0">
             <ul class="mb-2">
               <li v-for="val in value" v-bind:key="val" class="inline-block mx-4">
                 <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6" @click="loadInfo(val)"
                   href="#">{{
                       loadNameOrTitle(val)
-                  
                   }}
                 </a>
               </li>
             </ul>
-
-
           </template>
           <template v-else>
             <!-- Text not defiend -->
@@ -31,21 +29,28 @@
               defined</p>
           </template>
         </template>
-        <!-- Link ohne Array -->
-        <template v-else-if="checkValue(value, key)">
-          <p class="lg:text-sm">{{
-              firstLetterToUpperCase(key)
-          }}: </p>
+        <!-- Link ohne Array ausser url-->
+        <template v-else-if="checkValue(value)">
           <ul class="mb-2">
-            <li>
+            <li v-if="key != 'url'">
               <a @click="loadInfo(value)" class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6 mb-2"
                 href="#">
                 {{ loadNameOrTitle(value) }}
               </a>
             </li>
+            <li v-else>
+              <a class="underline underline-offset-4 lg:text-sm text-yellow-400 my-6 mb-2" :href="value"
+                target="_blank">
+                {{ value }}
+              </a>
+            </li>
           </ul>
         </template>
-        <p v-else class="px-6 lg:text-sm">{{ firstLetterToUpperCase(key) }}: {{ firstLetterToUpperCase(value) }}</p>
+        <template v-else-if="(key === 'created' || key === 'edited')">
+          <p class="lg:text-sm inline-block w-32 text-end">{{ getDate(value) }}</p>
+        </template>
+
+        <p v-else class="lg:text-sm inline-block w-28 text-end">{{ firstLetterToUpperCase(value) }}</p>
 
       </li>
 
@@ -67,6 +72,7 @@ export default {
     };
   },
   computed: {
+
     itemTitle() {
       let value = "";
       let property = this.response[this.page][this.pageNumber]
@@ -82,6 +88,15 @@ export default {
   },
 
   methods: {
+    getDate(value) {
+      let date = new Date(value)
+      return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+    },
+    textKeyPosition(value) {
+      if (!(this.generateList(value) || this.checkValue(value))) {
+        return ["text-start"]
+      }
+    },
     generateList(value) {
       return Array.isArray(value)
     },
@@ -93,9 +108,9 @@ export default {
     loadInfo(val) {
       this.$emit("loadInfo", val)
     },
-    checkValue(value, key) {
+    checkValue(value) {
       if (this.page != "films") {
-        if (value.indexOf('https') >= 0 && key != 'url') {
+        if (value.indexOf('https') >= 0) {
           return true
         }
       }
